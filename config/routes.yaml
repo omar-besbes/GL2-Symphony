@@ -5,3 +5,7 @@ controllers:
 kernel:
     resource: ../src/Kernel.php
     type: annotation
+
+app_to_do:
+    path: /
+    controller: App\Controller\ToDoController::indexAction
