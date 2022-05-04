@@ -1,0 +1,26 @@
+App\Entity\Personne:
+  properties:
+    nom:
+      - NotBlank: ~
+      - NotNull: ~
+      - Type: string
+      - Regex: '/\w+/'
+    prenom:
+      - NotBlank: ~
+      - NotNull: ~
+      - Type: string
+      - Regex: '/\w+/'
+    age:
+      - NotBlank: ~
+      - NotNull: ~
+      - Type: int
+      - Regex: '/\d{1,3}/'
+    cin:
+      - NotBlank: ~
+      - NotNull: ~
+      - Type: int
+      - Regex: '/\d{8}/'
+    path:
+      - NotBlank: ~
+      - NotNull: ~
+      - Type: string

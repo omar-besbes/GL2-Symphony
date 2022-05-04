@@ -20,10 +20,7 @@ class ToDoController extends AbstractController
 				'algebre' => 'aamel le nécessaire bch tekhdem ds 1'
 			]);
 		}
-		return $this->render('to_do/listTodo.html.twig', [
-			'controller_name' => 'ToDoController',
-			'todos' => $session->get('todos')
-		]);
+		return $this->redirectToRoute('app_to_do');
 	}
 
 	public function addToDoAction(SessionInterface $session): Response
@@ -39,10 +36,7 @@ class ToDoController extends AbstractController
 		$todos[$request->request->get('label')] = $request->request->get('todo');
 		$session->set('todos', $todos);
 
-		return $this->render('to_do/listTodo.html.twig', [
-			'controller_name' => 'ToDoController',
-			'todos' => $session->get('todos')
-		]);
+		return $this->redirectToRoute('app_to_do');
 	}
 
 	public function deleteToDoAction(SessionInterface $session)
@@ -58,10 +52,7 @@ class ToDoController extends AbstractController
 			$this->addFlash('danger', "ToDo doesn't exist");
 		}
 
-		return $this->render('to_do/listToDo.html.twig', [
-			'controller_name' => 'ToDoController',
-			'todos' => $session->get('todos')
-		]);
+		return $this->redirectToRoute('app_to_do');
 	}
 
 	public function resetToDoAction(SessionInterface $session): Response
@@ -69,9 +60,6 @@ class ToDoController extends AbstractController
 		$session->clear();
 		$this->addFlash('success', "cleared session");
 
-		return $this->render('to_do/listTodo.html.twig', [
-			'controller_name' => 'ToDoController',
-			'todos' => $session->get('todos')
-		]);
+		return $this->redirectToRoute('app_to_do');
 	}
 }
