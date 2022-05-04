@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello NotesController!{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            padding: 30px 50px;
+            font-family: Montserrat, serif;
+            font-weight: normal;
+        }
+    </style>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+{% endblock %}
+
+{% block body %}
+<div>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col"> minimum value</th>
+            <th scope="col"> maximum value</th>
+            <th scope="col"> number of values</th>
+            <th scope="col"> sum </th>
+            <th scope="col"> average value </th>
+
+        </tr>
+        </thead>
+        <tbody class="table-primary">
+        <tr>
+            <td> {{ min(table) }} </td>
+            <td> {{ max(table) }} </td>
+            <td> {{ table_size }} </td>
+            <td> {{ sum(table) }} </td>
+            <td> {{ avg(table) }} </td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table table-hover table-striped">
+        <tr class="table-secondary">
+            <th scope="row"> values</th>
+            {% for nb in table %}
+                <td>
+                    {{ nb }}
+                </td>
+            {% endfor %}
+        </tr>
+    </table>
+
+    <img src="img/IMG_0111_Edited_2.jpg" height="512" alt="profile">
+
+</div>
+{% endblock %}

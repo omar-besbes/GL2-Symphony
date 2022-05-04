@@ -1,0 +1,15 @@
+app_to_do:
+  path: /
+  controller: App\Controller\ToDoController::indexAction
+
+add_to_do:
+  path: /add
+  controller: App\Controller\ToDoController::addToDoAction
+
+delete_to_do:
+  path: /delete
+  controller: App\Controller\ToDoController::deleteToDoAction
+
+clear_to_do:
+  path: /clear
+  controller: App\Controller\ToDoController::resetToDoAction

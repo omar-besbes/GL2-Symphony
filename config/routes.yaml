@@ -6,6 +6,17 @@ kernel:
     resource: ../src/Kernel.php
     type: annotation
 
-app_to_do:
-    path: /
-    controller: App\Controller\ToDoController::indexAction
+to_do:
+    resource: to_do
+    type: directory
+    prefix: /todo
+
+notes:
+    resource: notes
+    type: directory
+    prefix: /notes
+
+pesonnes:
+    resource: personnes
+    type: directory
+    prefix: /personnes

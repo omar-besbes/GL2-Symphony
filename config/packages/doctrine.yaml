@@ -1,10 +1,17 @@
 doctrine:
     dbal:
+        dbname: 'symfony'
+        host: 'localhost'
+        port: 5432
+        user: 'postgres'
+        password: 'mploklokij'
+        driver: 'pdo_pgsql'
+        # if the url option is specified, it will override the above config
         url: '%env(resolve:DATABASE_URL)%'
-
+        server_version: '14.0'
+        charset: utf8mb4
         # IMPORTANT: You MUST configure your server version,
         # either here or in the DATABASE_URL env var (see .env file)
-        #server_version: '13'
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware

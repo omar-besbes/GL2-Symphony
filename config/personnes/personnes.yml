@@ -1,0 +1,27 @@
+app_personne:
+  path: /
+  controller: App\Controller\PersonneController::index
+
+add_personne:
+  path: /add/{nom}/{prenom}/{age}/{cin}/{path}
+  controller: App\Controller\PersonneController::add
+  requirements:
+    nom: \w+
+    prenom: \w+
+    age: \d{1,3}
+    cin: \d{8}
+  defaults:
+    path: "default"
+
+delete_personne:
+  path: /delete/{id}
+  controller: App\Controller\PersonneController::delete
+  requirements:
+    id: \d+
+
+update_personne:
+  path: /update/{id}/{criteria}/{newValue}
+  controller: App\Controller\PersonneController::update
+  requirements:
+    id: \d+
+    criteria: nom|prenom|age|cin|path

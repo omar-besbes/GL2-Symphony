@@ -1,0 +1,7 @@
+app_notes:
+  path: /{number}
+  controller: App\Controller\NotesController::index
+  requirements:
+    number: \d+
+  defaults:
+    number: 5
