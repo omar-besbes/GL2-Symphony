@@ -20,3 +20,7 @@ update_personne:
   requirements:
     id: \d+
     criteria: nom|prenom|age|cin|path
+
+add_personne_form:
+  path: /add
+  controller: App\Controller\PersonneController::form

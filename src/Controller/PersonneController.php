@@ -3,13 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Personne;
+use App\Form\PersonneType;
 use App\Repository\PersonneRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use function Symfony\Component\String\u;
 
 class PersonneController extends AbstractController
 {
@@ -27,7 +28,7 @@ class PersonneController extends AbstractController
 
 	public function index(): Response
 	{
-		$personnes = $this->repository->findBy(array(),null,10);
+		$personnes = $this->repository->findBy(array(), null, 10);
 		return $this->render('personnes/personnes.html.twig', [
 			'controller_name' => 'PersonneController',
 			'personnes' => $personnes
@@ -38,29 +39,31 @@ class PersonneController extends AbstractController
 	{
 		$personne = new Personne($nom, $prenom, intval($age), intval($cin), $path);
 		$errors = $validator->validate($personne);
-		if(count($errors) > 0) {
-			$this->addFlash('danger', (string) $errors);
+		if (count($errors) > 0) {
+			$this->addFlash('danger', (string)$errors);
 			return $this->redirectToRoute('app_personne');
 		}
 		$this->manager->persist($personne);
 		$this->manager->flush();
-		$this->addFlash('success', 'Personne '.$nom.' '.$prenom.' ajoutée avec succès.');
+		$this->addFlash('success', 'Personne ' . $nom . ' ' . $prenom . ' ajoutée avec succès.');
 		return $this->redirectToRoute('app_personne');
 	}
 
-	public function delete($id):Response {
+	public function delete($id): Response
+	{
 		$personne = $this->repository->findOneBy(['id' => $id]);
-		if($personne == null) {
-			$this->addFlash('danger', "Aucune personne portant l'id ". $id ." trouvée. L'avez-vous déja supprimée ?");
+		if ($personne == null) {
+			$this->addFlash('danger', "Aucune personne portant l'id " . $id . " trouvée. L'avez-vous déja supprimée ?");
 			return $this->redirectToRoute('app_personne');
 		}
 		$this->manager->remove($personne);
 		$this->manager->flush();
-		$this->addFlash('success', 'Personne '.$personne->getNom().' '.$personne->getPrenom().' supprimée avec succès.');
+		$this->addFlash('success', 'Personne ' . $personne->getNom() . ' ' . $personne->getPrenom() . ' supprimée avec succès.');
 		return $this->redirectToRoute('app_personne');
 	}
 
-	public function update($id, $criteria, $newValue, ValidatorInterface $validator):Response {
+	public function update($id, $criteria, $newValue, ValidatorInterface $validator): Response
+	{
 		$personne = $this->repository->findOneBy(['id' => $id]);
 		switch ($criteria) {
 			case 'nom':
@@ -95,13 +98,30 @@ class PersonneController extends AbstractController
 			}
 		}
 		$errors = $validator->validate($personne);
-		if(count($errors) > 0) {
-			$this->addFlash('danger', (string) $errors);
+		if (count($errors) > 0) {
+			$this->addFlash('danger', (string)$errors);
 			return $this->redirectToRoute('app_personne');
 		}
 		$this->manager->persist($personne);
 		$this->manager->flush();
-		$this->addFlash('success', $criteria.' de la personne modifié avec succès.');
+		$this->addFlash('success', $criteria . ' de la personne modifié avec succès.');
 		return $this->redirectToRoute('app_personne');
+	}
+
+	public function form(Request $request): Response
+	{
+		$personne = new Personne('ben foulen', 'foulen', 30, 15466875, 'default');
+		$form = $this->createForm(PersonneType::class, $personne);
+
+		$form->handleRequest($request);
+		if($form->isSubmitted() && $form->isValid()) {
+			$personne = $form->getData();
+			$this->addFlash('success', 'Form submitted successfully');
+			return $this->redirectToRoute('app_personne');
+		}
+
+		return $this->renderForm('personnes/form.html.twig', [
+			'form' => $form
+		]);
 	}
 }
